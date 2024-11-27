@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StatusTravel {
+  PENDING
+  CONFIRMED
+}
+
+model Motorista {
+  nome                        String
+  descricao                   String
+  quilometragem_minima_aceita Int
+  custo_por_km                Float     @default(0.0)
+  descricao_avaliacao         String    @default("")
+  nota_avaliacao              Float     @default(0)
+  data_nascimento             DateTime?
+  id                          Int       @id @default(autoincrement())
+  id_veiculo                  Int       @unique
+
+  Veiculo                     Veiculo   @relation(fields: [id_veiculo], references: [id])
+  HistoricoViagens            HistoricoViagens[]
+  @@unique([id, id_veiculo])
+}
+
+model Passageiro {
+  id                          String       @id @default(uuid())
+  nome                        String
+  descricao                   String
+  data_nascimento             DateTime?
+}
+
+model Veiculo {
+  tipo_veiculo         String
+  cor_veiculo          String
+  nome                 String
+  marca                String
+  ano                  DateTime
+  placa                String   @unique
+  estado_atual_veiculo String?
+  id                   Int      @id @default(autoincrement())
+
+  Motorista            Motorista[]
+}
+
+model HistoricoViagens {
+  id                Int   @id @default(autoincrement())
+  id_motorista      Int?
+  id_passageiro     String?
+  nome_motorista    String?
+  duracao           String?
+  distancia         Float?
+  origem            String
+  destino           String
+  data_inicio       DateTime
+  rota_google_api   Json?
+  valor             Float?
+  status_viagem     StatusTravel  @default(CONFIRMED)
+
+  Motorista         Motorista?   @relation(fields: [id_motorista], references: [id])
+}
