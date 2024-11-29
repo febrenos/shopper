@@ -4,5 +4,4 @@ export enum ErrorCode {
   invalid_distance = 'INVALID_DISTANCE',
   invalid_driver = 'INVALID_DRIVER',
   no_rides_found = 'NO_RIDES_FOUND',
-
 }
