@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 services:
   api:
     build:
@@ -8,12 +8,16 @@ services:
     env_file:
       - .env
     environment:
-      - DATABASE_URL=${DATABASE_URL}
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb
+    depends_on:
+      - db
     volumes:
       - ./api:/usr/src/app
     networks:
       - shopper-network
+    command: >
+      sh -c "echo -e 'GOOGLE_API_KEY=${GOOGLE_API_KEY}\nDATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb' > /usr/src/app/.env && npm run start:prod"
 
   front:
     build:
@@ -23,13 +27,33 @@ services:
     env_file:
       - .env
     environment:
-      - REACT_APP_GOOGLE_API_KEY=${GOOGLE_API_KEY}
-      - REACT_APP_API_ROUTE=/api
+      - REACT_APP_GOOGLE_API_KEY=${REACT_APP_GOOGLE_API_KEY}
+      - REACT_APP_API_ROUTE=${REACT_APP_API_ROUTE}
     volumes:
       - ./front:/usr/src/app
+    networks:
+      - shopper-network
+    command: >
+      sh -c "echo -e 'REACT_APP_GOOGLE_API_KEY=${REACT_APP_GOOGLE_API_KEY}\nREACT_APP_API_ROUTE=${REACT_APP_API_ROUTE}' > /usr/src/app/.env && serve -s build"
+
+  db:
+    image: postgres:15
+    container_name: shopper-db
+    restart: always
+    environment:
+      POSTGRES_USER: prisma
+      POSTGRES_PASSWORD: prisma
+      POSTGRES_DB: shopperdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - shopper-network
 
 networks:
   shopper-network:
     driver: bridge
+
+volumes:
+  postgres_data:
