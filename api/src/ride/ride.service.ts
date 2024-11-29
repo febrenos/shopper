@@ -21,22 +21,22 @@ export class RideService {
     estimateRequest: EstimateRequest,
   ): Promise<EstimateResponse> {
     const { customer_id, origin, destination } = estimateRequest;
-
+  
     try {
       if (!destination || !origin || destination === origin) {
         ExceptionHandler.invalidData();
       }
-
+  
       if (!customer_id) {
         ExceptionHandler.invalidData(
           'O id do usuário não pode estar em branco.',
         );
       }
-
+  
       // const customer = await this.prismaService.passageiro.findUnique({
       //   where: { id: customer_id },
       // });
-
+  
       // Faz a chamada para a API Directions
       const googleResponse = await this.googleClient.directions({
         params: {
@@ -46,7 +46,7 @@ export class RideService {
           key: process.env.GOOGLE_API_KEY,
         },
       });
-
+  
       // Busca todos os motoristas
       const motoristas = await this.prismaService.motorista.findMany({
         orderBy: {
@@ -56,11 +56,11 @@ export class RideService {
           Veiculo: true,
         },
       });
-
+  
       // Extraindo os dados do retorno da API
       const route = googleResponse.data.routes[0];
       const leg = route.legs[0];
-
+  
       const distanceInKm = leg.distance.value / 1000; // Converter para quilômetros
       const durationInMinutes = leg.duration.text; // Duração como string legível
       const originCoordinates: LatLong = {
@@ -71,20 +71,26 @@ export class RideService {
         latitude: leg.end_location.lat,
         longitude: leg.end_location.lng,
       };
-
+  
       // Construindo as opções com base nos motoristas encontrados
-      const options = motoristas.map((motorista) => ({
-        id: motorista.id,
-        name: motorista.nome || 'Sem Nome',
-        description: motorista.descricao || 'Sem Descrição',
-        vehicle: motorista.Veiculo?.tipo_veiculo || 'Desconhecido',
-        review: {
-          rating: motorista.nota_avaliacao || 0.0,
-          comment: motorista.descricao_avaliacao || 'Sem Avaliação',
-        },
-        value: Math.round(motorista.custo_por_km * distanceInKm * 100) / 100, //parseFloat((motorista.custo_por_km * distanceInKm).toFixed(2))
-      }));
-
+      const options = motoristas.map((motorista) => {
+        const vehicleInfo = motorista.Veiculo
+          ? `${motorista.Veiculo.tipo_veiculo} ${motorista.Veiculo.nome} ${motorista.Veiculo.ano.getFullYear()} ${motorista.Veiculo.cor_veiculo}`
+          : 'Informações do veículo indisponíveis';
+  
+        return {
+          id: motorista.id,
+          name: motorista.nome || 'Sem Nome',
+          description: motorista.descricao || 'Sem Descrição',
+          vehicle: vehicleInfo, // Concatenando as informações do veículo
+          review: {
+            rating: motorista.nota_avaliacao || 0.0,
+            comment: motorista.descricao_avaliacao || 'Sem Avaliação',
+          },
+          value: Math.round(motorista.custo_por_km * distanceInKm * 100) / 100, //parseFloat((motorista.custo_por_km * distanceInKm).toFixed(2))
+        };
+      });
+  
       // Montar a resposta final
       const estimateResponse: EstimateResponse = {
         origin: originCoordinates,
@@ -94,12 +100,12 @@ export class RideService {
         options: options, // Retorna todas as opções de motoristas
         routeResponse: googleResponse.data,
       };
-
+  
       return estimateResponse;
     } catch (error) {
       throw error;
     }
-  }
+  }  
 
   async confirmTravel(
     confirmTravelRequest: ConfirmTravelRequest,
