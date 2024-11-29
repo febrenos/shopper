@@ -87,7 +87,7 @@ export function Access() {
   const [destination, setDestination] = useState("37.7749145,-122.4293077")
   const [errorMessage, setErrorMessage] = useState<string>("")
   const [drivers, setDrivers] = useState<any[]>([])
-  const [selectedDriver, setSelectedDriver] = useState<any>(null)
+  const [selectedDriver, setSelectedDriver] = useState<any | null>(null)
   const [getStartTrip, setStartTrip] = useState<any>(null)
   const [travels, setTravels] = useState<any>(null)
   const [idMotoristaSearchSelect, setIdMotoristaSearchSelect] = useState<
@@ -148,7 +148,13 @@ export function Access() {
     const storedDriver = localStorage.getItem("selectedDriver")
     if (storedDriver) {
       setSelectedDriver(JSON.parse(storedDriver))
+    } else {
+      setSelectedDriver(null)
     }
+  }, [drivers])
+
+  useEffect(() => {
+    setSelectedDriver(null)
   }, [])
 
   const handleConfirm = async () => {
@@ -192,6 +198,7 @@ export function Access() {
         const response = await getRideDetails(userId, idMotoristaSearchSelect)
         setTravels(response.rides)
       } catch (error: any) {
+        setTravels([])
         if (error.response && error.response.data) {
           showError(
             `${error.response.data.error_code}: ${error.response.data.error_description}`
@@ -279,7 +286,6 @@ export function Access() {
                     list={drivers}
                     onSelect={handleDriverSelect}
                   />
-
                   {errorMessage && (
                     <p
                       style={{
@@ -325,18 +331,6 @@ export function Access() {
                     } // Agora recebe apenas o 'id' do motorista
                   />
 
-                  {errorMessage && (
-                    <p
-                      style={{
-                        color: "var(--red-primary)",
-                        textAlign: "center",
-                        fontWeight: 500,
-                      }}
-                    >
-                      {errorMessage}
-                    </p>
-                  )}
-
                   <Align gap="20px" alignCenter justify={JustifyType.Center}>
                     <Button
                       text="Buscar"
@@ -349,6 +343,18 @@ export function Access() {
                     />
                     <Button text="Cancelar" type={ButtonType.Secondary} />
                   </Align>
+
+                  {errorMessage && (
+                    <p
+                      style={{
+                        color: "var(--red-primary)",
+                        textAlign: "center",
+                        fontWeight: 500,
+                      }}
+                    >
+                      {errorMessage}
+                    </p>
+                  )}
 
                   <TravelCardList list={travels} />
                 </Align>

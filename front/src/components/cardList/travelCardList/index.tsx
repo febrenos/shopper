@@ -36,7 +36,7 @@ export function TravelCardList({ list }: TravelCardListProps) {
           />
         ))
       ) : (
-        <p>Nenhuma viagem encontrada.</p> // Mensagem para caso a lista seja null ou vazia
+        <p>Nenhuma viagem encontrada.</p>
       )}
     </Styled.Cards>
   )
