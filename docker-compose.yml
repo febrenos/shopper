@@ -1,10 +1,15 @@
-version: '3'
+version: "3"
 services:
   api:
     build:
       context: ./api
     ports:
       - "8080:8080"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=${DATABASE_URL}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
       - ./api:/usr/src/app
     networks:
@@ -15,6 +20,11 @@ services:
       context: ./front
     ports:
       - "80:80"
+    env_file:
+      - .env
+    environment:
+      - REACT_APP_GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - REACT_APP_API_ROUTE=/api
     volumes:
       - ./front:/usr/src/app
     networks:
