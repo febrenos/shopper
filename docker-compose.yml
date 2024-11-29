@@ -1,0 +1,25 @@
+version: '3'
+services:
+  api:
+    build:
+      context: ./api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./api:/usr/src/app
+    networks:
+      - shopper-network
+
+  front:
+    build:
+      context: ./front
+    ports:
+      - "80:80"
+    volumes:
+      - ./front:/usr/src/app
+    networks:
+      - shopper-network
+
+networks:
+  shopper-network:
+    driver: bridge
