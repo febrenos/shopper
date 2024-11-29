@@ -175,7 +175,6 @@ export class RideService {
     customerId: string,
     driverId: number,
   ): Promise<TravelsDone> {
-    console.log(customerId);
 
     if (!customerId) {
       ExceptionHandler.invalidData('O id do usuário não pode estar em branco.');
