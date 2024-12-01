@@ -19,6 +19,27 @@
 | PATCH | {driver_id}/ride/{customer_id} | busca historico de viagens |
 
 - Integrado aos serviços do google: Directions API, Routes API
+- Prisma como ORM (gerenciador de banco)
+- Testes unitários.
+- Exceptions personalizados
+- Documentação Swagger
+
+```
+#CRIAÇÃO DA API
+- npm i -g @nestjs/cli
+- nest new api
+- cd api
+- npm i --save-dev jest ts-jest @nestjs/testing @types/jest prisma
+- npm i @nestjs/common class-validator class-transformer http-status-codes @nestjs/swagger swagger-ui-express @prisma/client @googlemaps/google-maps-services-js dotenv cors
+- npx prisma init
+
+#SETTINGS
+- npx prisma migrate dev --name init
+- npx prisma studio
+- npm run test
+- npm run test -- <nome-do-teste>
+- npm run test -- --coverage
+```
 
 </details>
 
