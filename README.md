@@ -1,5 +1,13 @@
 # shopper
 
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start;">
+  <img src="./imgs/tela.png" alt="Tela" width="500" style="border-radius: 20px;">
+  <img src="./imgs/solicitar.png" alt="Solicitar" width="150">
+  <img src="./imgs/opcoes.png" alt="Opções" width="150">
+  <img src="./imgs/historico.png" alt="Histórico" width="150">
+</div>
+
+
 <details>
 <summary>API - NestJS(node)</summary>
 
