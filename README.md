@@ -56,7 +56,7 @@
 
 ## Front web - React TypeScript
 - https://shopper-ashy-three.vercel.app/
-- Integrado aos serviços do google: Directions API, Maps API
+- Integrado aos serviços do google: Directions API, Maps JavaScript API
 
 </details>
 
