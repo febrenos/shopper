@@ -35,7 +35,7 @@
 <details>
 <summary>Banco de dados - postgresSQL</summary>
 
-## Banco de dados
+## Banco de dados - postgresSQL
 
 ```mermaid
 erDiagram
