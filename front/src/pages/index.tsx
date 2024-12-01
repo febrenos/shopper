@@ -98,7 +98,7 @@ export function Access() {
     setErrorMessage(message)
     setTimeout(() => {
       setErrorMessage("")
-    }, 4000) // 5 segundos
+    }, 4000) // 4 segundos
   }
 
   const handleStartTrip = async () => {
@@ -222,7 +222,7 @@ export function Access() {
         <Styles.Center>
           <Align alignCenter column gap="20px">
             <NavTab
-              tabs={["Iniciar", "Solicitar", "Opções"]}
+              tabs={["Iniciar", "Opções", "Histórico"]}
               activeTab={getNavTab}
               onTabClick={setNavTab}
             />
