@@ -44,7 +44,7 @@
 </details>
 
 <details>
-<summary>Front web</summary>
+<summary>Front web - React TypeScript</summary>
 
 ## Front web - React TypeScript
 - https://shopper-ashy-three.vercel.app/
