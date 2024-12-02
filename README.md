@@ -10,9 +10,15 @@
 ## Serviços necessários do Google
 
 <div>
-  <img src="./imgs/google1.png" alt="Solicitar">
-  <img src="./imgs/google2.png" alt="Opções">
-  <img src="./imgs/google3.png" alt="Histórico">
+  <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com?hl=pt-BR&project=places-api-443513&pli=1&inv=1&invt=AbjE4Q" target="_blank">
+    <img src="./imgs/google1.png" alt="Solicitar">
+  <a/>
+  <a href="https://console.cloud.google.com/apis/library/routes.googleapis.com?hl=pt-BR&project=places-api-443513&login=true&pli=1" target="_blank">
+    <img src="./imgs/google2.png" alt="Opções">
+  <a/>
+  <a href="https://console.cloud.google.com/apis/library/directions-backend.googleapis.com?hl=pt-BR&project=places-api-443513" target="_blank">
+    <img src="./imgs/google3.png" alt="Histórico">
+  <a/>
 </div>
 
 ## API - NestJS(node)
