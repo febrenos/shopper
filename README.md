@@ -1,15 +1,19 @@
 # shopper
 
-<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-start;">
+<div>
   <img src="./imgs/tela.png" alt="Tela" width="500" style="border-radius: 20px;">
   <img src="./imgs/solicitar.png" alt="Solicitar" width="150">
   <img src="./imgs/opcoes.png" alt="Opções" width="150">
   <img src="./imgs/historico.png" alt="Histórico" width="150">
 </div>
 
+## Serviços necessários do Google
 
-<details>
-<summary>API - NestJS(node)</summary>
+<div>
+  <img src="./imgs/google1.png" alt="Solicitar">
+  <img src="./imgs/google2.png" alt="Opções">
+  <img src="./imgs/google3.png" alt="Histórico">
+</div>
 
 ## API - NestJS(node)
 - https://shopper-0tsi.onrender.com/api
@@ -49,20 +53,9 @@
 - npm run test -- --coverage
 ```
 
-</details>
-
-<details>
-<summary>Front web - React TypeScript</summary>
-
 ## Front web - React TypeScript
 - https://shopper-ashy-three.vercel.app/
 - Integrado aos serviços do google: Directions API, Maps JavaScript API
-
-</details>
-
-
-<details>
-<summary>Banco de dados - postgresSQL</summary>
 
 ## Banco de dados - postgresSQL
 
@@ -115,5 +108,3 @@ erDiagram
     PASSAGEIRO ||--o{ HISTORICOVIAGENS : "Participa"
 ```
 - banco postgres SQL
-
-</details>
