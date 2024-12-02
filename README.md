@@ -1,40 +1,41 @@
 # shopper
 
 <div>
-  <img src="./imgs/tela.png" alt="Tela" width="500" style="border-radius: 20px;">
-  <img src="./imgs/solicitar.png" alt="Solicitar" width="150">
-  <img src="./imgs/opcoes.png" alt="Opções" width="150">
-  <img src="./imgs/historico.png" alt="Histórico" width="150">
+  <img src="./doc/tela.png" alt="Tela" width="500" style="border-radius: 20px;">
+  <img src="./doc/solicitar.png" alt="Solicitar" width="150">
+  <img src="./doc/opcoes.png" alt="Opções" width="150">
+  <img src="./doc/historico.png" alt="Histórico" width="150">
 </div>
 
 ## Serviços necessários do Google
 
 <div>
   <a href="https://console.cloud.google.com/apis/library/maps-backend.googleapis.com?hl=pt-BR&project=places-api-443513&pli=1&inv=1&invt=AbjE4Q" target="_blank">
-    <img src="./imgs/google1.png" alt="Solicitar">
+    <img src="./doc/google1.png" alt="Solicitar">
   <a/>
   <a href="https://console.cloud.google.com/apis/library/routes.googleapis.com?hl=pt-BR&project=places-api-443513&login=true&pli=1" target="_blank">
-    <img src="./imgs/google2.png" alt="Opções">
+    <img src="./doc/google2.png" alt="Opções">
   <a/>
   <a href="https://console.cloud.google.com/apis/library/directions-backend.googleapis.com?hl=pt-BR&project=places-api-443513" target="_blank">
-    <img src="./imgs/google3.png" alt="Histórico">
+    <img src="./doc/google3.png" alt="Histórico">
   <a/>
 </div>
 
 ## API - NestJS(node)
+
 - https://shopper-0tsi.onrender.com/api
 
-| Metodo |  Rota | Descricao |
-|---|---|---|
-| POST | user/create-driver | cadastrar motorista no banco |
-| POST | user/create-passenger | cadastrar passageiro no banco |
-| POST | user/create-vehicle | cadastrar veículo no banco |
-| GET | user/driver | listar motoristas |
-| GET | user/passenger | listar passageiros |
-| GET | user/vehicle | listar veículos |
-| POST | ride/estimate | calcula o trajeto e mostra o motorista |
-| PATCH | ride/confirm | salva a viagem no banco |
-| PATCH | {driver_id}/ride/{customer_id} | busca historico de viagens |
+| Metodo | Rota                           | Descricao                              |
+| ------ | ------------------------------ | -------------------------------------- |
+| POST   | user/create-driver             | cadastrar motorista no banco           |
+| POST   | user/create-passenger          | cadastrar passageiro no banco          |
+| POST   | user/create-vehicle            | cadastrar veículo no banco             |
+| GET    | user/driver                    | listar motoristas                      |
+| GET    | user/passenger                 | listar passageiros                     |
+| GET    | user/vehicle                   | listar veículos                        |
+| POST   | ride/estimate                  | calcula o trajeto e mostra o motorista |
+| PATCH  | ride/confirm                   | salva a viagem no banco                |
+| PATCH  | {driver_id}/ride/{customer_id} | busca historico de viagens             |
 
 - Integrado aos serviços do google: Directions API, Routes API
 - Prisma como ORM (gerenciador de banco)
@@ -60,6 +61,7 @@
 ```
 
 ## Front web - React TypeScript
+
 - https://shopper-ashy-three.vercel.app/
 - Integrado aos serviços do google: Directions API, Maps JavaScript API
 
@@ -113,4 +115,5 @@ erDiagram
     MOTORISTA ||--o{ HISTORICOVIAGENS : "Registra"
     PASSAGEIRO ||--o{ HISTORICOVIAGENS : "Participa"
 ```
+
 - banco postgres SQL
