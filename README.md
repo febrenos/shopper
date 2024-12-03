@@ -1,5 +1,9 @@
 # shopper
 
+
+### ⚠️  **ATENÇÃO: Serviços Google desativados no projeto devido ao custo.**    
+
+
 <div>
   <img src="./doc/tela.png" alt="Tela" width="500" style="border-radius: 20px;">
   <img src="./doc/solicitar.png" alt="Solicitar" width="150">
