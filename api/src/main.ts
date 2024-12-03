@@ -51,8 +51,8 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Shopper API')
-    .setDescription('A API para o sistema de compras')
+    .setTitle('NestJS API')
+    .setDescription('A progressive Node.js framework for building efficient and scalable server-side applications.')
     .setVersion('1.0')
     .build();
   const document = SwaggerModule.createDocument(app, config);
