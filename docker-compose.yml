@@ -1,3 +1,4 @@
+version: "3.9"
 services:
   api:
     build:
@@ -10,13 +11,19 @@ services:
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
       - DATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     volumes:
       - ./api:/usr/src/app
     networks:
       - shopper-network
     command: >
-      sh -c "echo -e 'GOOGLE_API_KEY=${GOOGLE_API_KEY}\nDATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb' > /usr/src/app/.env && npm run start:prod"
+      sh -c "
+      echo -e 'GOOGLE_API_KEY=${GOOGLE_API_KEY}\nDATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb' > /usr/src/app/.env &&
+      npx prisma generate &&
+      npx prisma migrate deploy &&
+      npm run start:prod
+      "
 
   front:
     build:
@@ -49,6 +56,10 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - shopper-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U prisma"]
+      interval: 10s
+      retries: 5
 
 networks:
   shopper-network:
