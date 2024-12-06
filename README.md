@@ -29,6 +29,12 @@
 
 - https://shopper-0tsi.onrender.com/api
 
+- [x] Integrado aos serviços do google: Directions API, Routes API
+- [x] Prisma como ORM (gerenciador de banco)
+- [x] Testes unitários
+- [x] Exceptions personalizados
+- [x] Documentação Swagger
+
 | Metodo | Rota                           | Descricao                              |
 | ------ | ------------------------------ | -------------------------------------- |
 | POST   | user/create-driver             | cadastrar motorista no banco           |
@@ -40,12 +46,6 @@
 | POST   | ride/estimate                  | calcula o trajeto e mostra o motorista |
 | PATCH  | ride/confirm                   | salva a viagem no banco                |
 | PATCH  | {driver_id}/ride/{customer_id} | busca historico de viagens             |
-
-- Integrado aos serviços do google: Directions API, Routes API
-- Prisma como ORM (gerenciador de banco)
-- Testes unitários.
-- Exceptions personalizados
-- Documentação Swagger
 
 ```
 #CRIAÇÃO DA API
@@ -68,6 +68,11 @@
 
 - https://shopper-ashy-three.vercel.app/
 - Integrado aos serviços do google: Directions API, Maps JavaScript API
+
+```
+npx create-react-app front --template typescript
+npm i styled-components axios
+```
 
 ## Banco de dados - postgresSQL
 
