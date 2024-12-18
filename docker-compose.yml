@@ -1,69 +1,60 @@
-version: "3.9"
 services:
-  api:
+  nest-api:
+    container_name: nest-api
     build:
-      context: ./api
+      context: .
+      dockerfile: ./api/Dockerfile
     ports:
-      - "8080:8080"
-    env_file:
-      - .env
-    environment:
-      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-      - DATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb
+      - "3000:3000"
     depends_on:
-      db:
-        condition: service_healthy
-    volumes:
-      - ./api:/usr/src/app
-    networks:
-      - shopper-network
-    command: >
-      sh -c "
-      echo -e 'GOOGLE_API_KEY=${GOOGLE_API_KEY}\nDATABASE_URL=postgresql://prisma:prisma@db:5432/shopperdb' > /usr/src/app/.env &&
-      npx prisma generate &&
-      npx prisma migrate deploy &&
-      npm run start:prod
-      "
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://prisma:prisma@postgres:5432/shopperdb?schema=public
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      retries: 3
+      start_period: 10s
+      timeout: 10s
 
   front:
     build:
       context: ./front
     ports:
       - "80:80"
-    env_file:
-      - .env
     environment:
-      - REACT_APP_GOOGLE_API_KEY=${REACT_APP_GOOGLE_API_KEY}
-      - REACT_APP_API_ROUTE=${REACT_APP_API_ROUTE}
+      - REACT_APP_GOOGLE_API_KEY=your-google-api-key
+      - REACT_APP_API_ROUTE=http://localhost:3000
     volumes:
       - ./front:/usr/src/app
     networks:
       - shopper-network
     command: >
-      sh -c "echo -e 'REACT_APP_GOOGLE_API_KEY=${REACT_APP_GOOGLE_API_KEY}\nREACT_APP_API_ROUTE=${REACT_APP_API_ROUTE}' > /usr/src/app/.env && serve -s build"
+      sh -c "echo -e 'REACT_APP_GOOGLE_API_KEY=your-google-api-key\nREACT_APP_API_ROUTE=http://localhost:3000' > /usr/src/app/.env && serve -s build"
 
-  db:
+  postgres:
     image: postgres:15
-    container_name: shopper-db
+    container_name: postgres
     restart: always
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: prisma
       POSTGRES_PASSWORD: prisma
       POSTGRES_DB: shopperdb
-    ports:
-      - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - shopper-network
+      - postgres:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U prisma"]
+      test: ["CMD", "pg_isready", "-U", "prisma"]
       interval: 10s
       retries: 5
+      start_period: 10s
+      timeout: 5s
 
 networks:
   shopper-network:
     driver: bridge
 
 volumes:
-  postgres_data:
+  postgres:
+    name: nest-db
